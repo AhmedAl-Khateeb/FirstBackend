@@ -1,0 +1,108 @@
+<?php
+
+include_once 'C:/xampp/htdocs/Back-end/shoppaing/admin/shared/head.php';
+include_once 'C:/xampp/htdocs/Back-end/shoppaing/admin/shared/header.php';
+include_once 'C:/xampp/htdocs/Back-end/shoppaing/admin/shared/asid.php';
+
+include_once 'C:/xampp/htdocs/Back-end/shoppaing/admin/vendor/configDatabase.php';
+
+
+
+$Count = 1;
+
+// Read
+$select = "SELECT * FROM `products`";
+$allData = mysqli_query($conn,$select);
+
+
+// Delete
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+
+    $delete = "DELETE FROM `products` WHERE id=$id";
+    $d = mysqli_query($conn,$delete);
+
+    path('products/list.php');
+}
+
+
+
+
+
+
+
+
+
+
+?>
+
+
+<main id="main" class="main">
+<section class="section">
+   
+<div class="card">
+  <div class="card-body">
+    <h1 class="card-title text-center">List Products</h1>
+
+
+    
+    <table class="table table-striped">
+    
+        <tr>
+          <th class="text-center bg-dark text-white">NU</th>
+          <th class="text-center bg-dark text-white">ID</th>
+          <th class="text-center bg-dark text-white">Name</th>
+          <th class="text-center bg-dark text-white" colspan="3">Action</th>
+          
+        </tr>
+      
+      
+      <?php foreach($allData as $item) :?>
+        <tr>
+          <th class="text-center"> <?= $Count++ ?> </th>
+          <th class="text-center"> <?= $item['id'] ?> </th>
+          <td class="text-center"> <?= $item['name'] ?> </td>
+
+          
+
+          <td class="text-center"> <a href="<?=url("app/products/show.php?show=") . $item['id'] ?>"> <i title="show" class="bx bx-show-alt text-success"></i>  </a> </td>
+
+          <td class="text-center"> <a href="<?=url("app/products/update.php?edit=") . $item['id'] ?>"> <i title="Edit" class="bx bxs-message-square-edit"></i> </a> </td>
+          <td class="text-center"> <a href="?delete=<?= $item['id'] ?>"> <i title="Remove" class="bx bxs-comment-x text-danger"></i> </a> </td>
+        </tr>
+      
+      <?php endforeach; ?>
+     
+    </table>
+    
+
+  </div>
+</div>
+    </section>
+</main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+
+include_once 'C:/xampp/htdocs/Back-end/shoppaing/admin/shared/footer.php';
+include_once 'C:/xampp/htdocs/Back-end/shoppaing/admin//shared/script.php';
+
+?>
